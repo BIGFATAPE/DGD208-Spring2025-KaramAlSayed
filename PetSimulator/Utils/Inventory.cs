@@ -1,22 +1,23 @@
-﻿// Utils/Inventory.cs - New class to manage items
+﻿// Utils/Inventory.cs
 using System.Collections.Generic;
+using System.Linq;
 using PetSimulator.Items;
 
 namespace PetSimulator.Utils
 {
-    public static class Inventory
+    public class Inventory
     {
-        private static List<Item> availableItems = new List<Item>
-        {
-            new DogFood(),
-            new ChewToy()
-            // Can add more items here later
-        };
+        private readonly List<Item> items = new List<Item>();
 
-        public static List<Item> GetAvailableItems()
+        public void AddItem(Item item)
         {
-            // Return a copy to prevent external modifications
-            return new List<Item>(availableItems);
+            if (item == null) return;
+            items.Add(item);
         }
+
+        public bool RemoveItem(Item item) => items.Remove(item);
+        public IEnumerable<Item> GetItemsForPetType(PetType petType) => items.Where(i => i?.CanUseOnPetType(petType) ?? false);
+        public IEnumerable<Item> GetAllItems() => items.AsReadOnly();
     }
 }
+// This code defines an inventory system for the game

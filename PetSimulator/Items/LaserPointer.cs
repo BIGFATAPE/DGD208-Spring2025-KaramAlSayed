@@ -1,4 +1,5 @@
-﻿using PetSimulator.Models;
+﻿// Items/LaserPointer.cs
+using PetSimulator.Items;
 
 namespace PetSimulator.Items
 {
@@ -7,22 +8,12 @@ namespace PetSimulator.Items
         public LaserPointer()
         {
             Name = "Laser Pointer";
-            Description = "Endless fun for cats";
-            BoostValue = 40;
-            UseTimeSeconds = 2;
+            Price = 8;
+            UsageTimeSeconds = 2;
+            Description = "Increases fun by 20 points for cats";
         }
 
-        protected override void ApplyEffect(Pet pet)
-        {
-            if (pet is Cat cat)
-            {
-                cat.Fun = Math.Min(cat.Fun + BoostValue, 100);
-                Console.WriteLine($"{cat.Name} chases the dot frantically! (+{BoostValue} Fun)");
-            }
-            else
-            {
-                Console.WriteLine($"{pet.Name} doesn't understand the laser pointer.");
-            }
-        }
+        public override bool CanUseOnPetType(PetType petType) => petType == PetType.Cat;
     }
 }
+// This code defines a Laser Pointer item in the Pet Simulator game, specifically designed for cats to increase their fun level. (Visual Studio likes to autofill these comments)

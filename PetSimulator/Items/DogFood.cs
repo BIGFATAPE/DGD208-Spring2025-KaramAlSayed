@@ -1,4 +1,5 @@
-﻿using PetSimulator.Models;
+﻿// Items/DogFood.cs
+using PetSimulator.Items;
 
 namespace PetSimulator.Items
 {
@@ -6,23 +7,13 @@ namespace PetSimulator.Items
     {
         public DogFood()
         {
-            Name = "Dog Food";
-            Description = "Nutritious kibble for dogs";
-            BoostValue = 30;
-            UseTimeSeconds = 3;
+            Name = "Deluxe Dog Food";
+            Price = 20;
+            UsageTimeSeconds = 4;
+            Description = "Hearty meal that reduces hunger by 40 points";
         }
 
-        protected override void ApplyEffect(Pet pet)
-        {
-            if (pet is Dog dog)
-            {
-                dog.Hunger = Math.Min(dog.Hunger + BoostValue, 100);
-                Console.WriteLine($"{dog.Name} happily eats the food! (+{BoostValue} Hunger)");
-            }
-            else
-            {
-                Console.WriteLine($"{pet.Name} sniffs but refuses to eat dog food.");
-            }
-        }
+        public override bool CanUseOnPetType(PetType petType) => petType == PetType.Dog;
     }
 }
+// Nam Nam for the doggos!

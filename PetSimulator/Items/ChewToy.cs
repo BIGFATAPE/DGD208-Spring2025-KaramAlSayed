@@ -1,4 +1,5 @@
-﻿using PetSimulator.Models;
+﻿// Items/ChewToy.cs
+using PetSimulator.Items;
 
 namespace PetSimulator.Items
 {
@@ -6,16 +7,13 @@ namespace PetSimulator.Items
     {
         public ChewToy()
         {
-            Name = "Chew Toy";
-            Description = "Durable rubber toy for dogs";
-            BoostValue = 25;
-            UseTimeSeconds = 4;
+            Name = "Durable Chew Toy";
+            Price = 10;
+            UsageTimeSeconds = 5;
+            Description = "Increases fun by 25 points for dogs";
         }
 
-        protected override void ApplyEffect(Pet pet)
-        {
-            pet.Fun = Math.Min(pet.Fun + BoostValue, 100);
-            Console.WriteLine($"{pet.Name} plays with the toy! (+{BoostValue} Fun)");
-        }
+        public override bool CanUseOnPetType(PetType petType) => petType == PetType.Dog;
     }
 }
+// This code defines a Chewtoy in the pet simulator game, specificallty for dogs, woof woof indeed.

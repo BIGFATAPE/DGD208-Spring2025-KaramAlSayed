@@ -1,26 +1,38 @@
-﻿namespace PetSimulator.Models
+﻿// Models/Cat.cs
+using System.Threading.Tasks;
+using PetSimulator.Items;
+
+namespace PetSimulator.Models
 {
     public class Cat : Pet
     {
-        public Cat(string name)
+        public Cat()
         {
-            Name = name;
-            OnPetStatusChanged += message => Console.WriteLine($"Cat Update: {message}");
+            Type = PetType.Cat;
+            Hunger = 50;
+            Sleep = 50;
+            Fun = 50;
         }
 
-        public override void MakeSound()
+        public override async Task UseItemAsync(Item item)
         {
-            var sounds = new[] { "meows", "purrs", "hisses", "ignores you" };
-            NotifyStatus($"{Name} {sounds[new Random().Next(sounds.Length)]}");
-        }
+            if (item == null || !item.CanUseOnPetType(Type)) return;
 
-        public override void DecreaseStats()
-        {
-            Hunger = Math.Max(Hunger - 1, 0);
-            Sleep = Math.Max(Sleep - 1, 0);
-            Fun = Math.Max(Fun - 3, 0); // Cats get bored faster
+            await Task.Delay(item.UsageTimeSeconds * 1000);
 
-            if (!IsAlive) NotifyStatus($"{Name} has passed away...");
+            switch (item)
+            {
+                case CatFood _:
+                    Hunger += 30;
+                    break;
+                case LaserPointer _:
+                    Fun += 20;
+                    break;
+                case PetBed _:
+                    Sleep += 50;
+                    break;
+            }
         }
     }
 }
+// Meow

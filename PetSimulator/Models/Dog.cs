@@ -1,25 +1,38 @@
-﻿namespace PetSimulator.Models
+﻿// Models/Dog.cs
+using System.Threading.Tasks;
+using PetSimulator.Items;
+
+namespace PetSimulator.Models
 {
     public class Dog : Pet
     {
-        public Dog(string name)
+        public Dog()
         {
-            Name = name;
-            OnPetStatusChanged += message => Console.WriteLine($"Dog Update: {message}");
+            Type = PetType.Dog;
+            Hunger = 50;
+            Sleep = 50;
+            Fun = 50;
         }
 
-        public override void MakeSound()
+        public override async Task UseItemAsync(Item item)
         {
-            NotifyStatus($"{Name} barks: Woof woof!");
-        }
+            if (item == null || !item.CanUseOnPetType(Type)) return;
 
-        public override void DecreaseStats()
-        {
-            Hunger = Math.Max(Hunger - 2, 0); // Dogs get hungry faster
-            Sleep = Math.Max(Sleep - 1, 0);
-            Fun = Math.Max(Fun - 1, 0);
+            await Task.Delay(item.UsageTimeSeconds * 1000);
 
-            if (!IsAlive) NotifyStatus($"{Name} has passed away...");
+            switch (item)
+            {
+                case DogFood _:
+                    Hunger += 40;
+                    break;
+                case ChewToy _:
+                    Fun += 25;
+                    break;
+                case PetBed _:
+                    Sleep += 50;
+                    break;
+            }
         }
     }
 }
+// WOOF

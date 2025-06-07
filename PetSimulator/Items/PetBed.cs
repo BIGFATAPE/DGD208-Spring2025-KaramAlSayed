@@ -1,4 +1,5 @@
-﻿using PetSimulator.Models;
+﻿// Items/PetBed.cs
+using PetSimulator.Items;
 
 namespace PetSimulator.Items
 {
@@ -6,16 +7,13 @@ namespace PetSimulator.Items
     {
         public PetBed()
         {
-            Name = "Comfy Bed";
-            Description = "Soft bed for resting";
-            BoostValue = 35;
-            UseTimeSeconds = 5;
+            Name = "Comfy Pet Bed";
+            Price = 30;
+            UsageTimeSeconds = 10;
+            Description = "Increases sleep by 50 points for all pets";
         }
 
-        protected override void ApplyEffect(Pet pet)
-        {
-            pet.Sleep = Math.Min(pet.Sleep + BoostValue, 100);
-            Console.WriteLine($"{pet.Name} curls up and falls asleep.");
-        }
+        public override bool CanUseOnPetType(PetType petType) => true;
     }
 }
+// Comfy bed for all the pets!
